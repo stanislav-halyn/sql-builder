@@ -21,5 +21,11 @@ describe('use-sql-builder.ts', () => {
     });
 
     expect(result.current.sqlQuery).toEqual(`SELECT *\nFROM sessions\nWHERE (username='Casey')`);
+
+    act(() => {
+      result.current.resetSqlQuery();
+    });
+
+    expect(result.current.sqlQuery).toEqual('');
   });
 });

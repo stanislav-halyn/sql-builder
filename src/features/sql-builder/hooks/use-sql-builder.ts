@@ -65,8 +65,13 @@ export const useSearchConditionsParser = () => {
     [setSqlQuery]
   );
 
+  const resetSqlQuery = useCallback(() => {
+    setSqlQuery('');
+  }, [setSqlQuery]);
+
   return {
     sqlQuery,
+    resetSqlQuery,
     parseSearchConditions,
   };
 };

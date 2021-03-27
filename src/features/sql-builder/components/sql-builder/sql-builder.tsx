@@ -11,6 +11,9 @@ import { Button, ButtonSizesE, ButtonThemesE } from '@components/controls';
 import SearchConditions from '../search-conditions';
 import GeneratedSql from '../generated-sql';
 
+// Mocks
+import { TABLE_MOCK } from '../../mocks/table-mock';
+
 // Styles
 import styles from './sql-builder.scss';
 
@@ -26,14 +29,21 @@ const SqlBuilder = () => {
     resetSearchConditions,
   } = useSearchConditions();
 
-  const { sqlQuery, parseSearchConditions } = useSearchConditionsParser();
+  const { sqlQuery, resetSqlQuery, parseSearchConditions } = useSearchConditionsParser();
 
-  const parseSql = useCallback(() => {
+  const handleSearch = useCallback(() => {
     parseSearchConditions(searchConditions);
   }, [parseSearchConditions, searchConditions]);
 
+  const handleReset = useCallback(() => {
+    resetSearchConditions();
+    resetSqlQuery();
+  }, [resetSqlQuery, resetSearchConditions]);
+
   return (
-    <div>
+    <div styleName="common">
+      <h4 styleName="heading">Search for {TABLE_MOCK.label}</h4>
+
       <SearchConditions
         searchConditions={searchConditions}
         updateSearchCondition={updateSearchCondition}
@@ -47,12 +57,12 @@ const SqlBuilder = () => {
       </div>
 
       <div styleName="control-buttons">
-        <Button onClick={parseSql} styleName="search-button">
+        <Button onClick={handleSearch} styleName="search-button">
           <FaSearch size={14} styleName="search-icon" />
           Search
         </Button>
 
-        <Button onClick={resetSearchConditions} theme={ButtonThemesE.SECONDARY}>
+        <Button onClick={handleReset} theme={ButtonThemesE.SECONDARY}>
           Reset
         </Button>
       </div>
