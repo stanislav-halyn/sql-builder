@@ -6,6 +6,7 @@ import {
   SearchConditionTypesE,
   SearchConditionI,
   SearchConditionOptionI,
+  ColumnI,
 } from '@entities/sql-builder';
 
 // Utils
@@ -15,6 +16,7 @@ import { updateArrayItem } from '@utils/array.utils';
 import { TABLE_MOCK } from '../../../mocks/table-mock';
 
 // Components
+import { Input, Select } from '@components/controls';
 import SearchConditionWrapper from '../search-condition-wrapper';
 
 /**
@@ -29,6 +31,13 @@ interface SearchConditionBetweenPropsI {
     updater: (oldCondition: SearchConditionI<number[]>) => SearchConditionI<number[]>
   ) => void;
 }
+
+/**
+ * Local helpers
+ */
+const getValue = <T extends SearchConditionOptionI | ColumnI>(option: T) => option.value;
+
+const getLabel = <T extends SearchConditionOptionI | ColumnI>(option: T) => option.label;
 
 /**
  * Search condition between which shows the
@@ -78,30 +87,32 @@ const SearchConditionBetween = ({
 
   return (
     <SearchConditionWrapper>
-      <select name="columns" value={selectedColumn} onChange={handleColumnChange}>
-        {TABLE_MOCK.columns.map(column => (
-          <option key={`columns-option-${column.value}`} value={column.value}>
-            {column.label}
-          </option>
-        ))}
-      </select>
+      <Select
+        name="columns"
+        value={selectedColumn}
+        onChange={handleColumnChange}
+        options={TABLE_MOCK.columns}
+        getValue={getValue}
+        getLabel={getLabel}
+      />
 
       <span>is</span>
 
-      <select name="condition" value={conditionType} onChange={handleConditionChange}>
-        {searchConditionOptions.map(searchCondition => (
-          <option key={`conditions-option-${searchCondition.value}`} value={searchCondition.value}>
-            {searchCondition.label}
-          </option>
-        ))}
-      </select>
+      <Select
+        name="condition"
+        value={conditionType}
+        onChange={handleConditionChange}
+        options={searchConditionOptions}
+        getValue={getValue}
+        getLabel={getLabel}
+      />
 
       <Fragment>
-        <input type="text" data-value-index={0} value={value[0]} onChange={handleValueChange} />
+        <Input type="text" data-value-index={0} value={value[0]} onChange={handleValueChange} />
 
         <span>and</span>
 
-        <input type="text" data-value-index={1} value={value[1]} onChange={handleValueChange} />
+        <Input type="text" data-value-index={1} value={value[1]} onChange={handleValueChange} />
       </Fragment>
     </SearchConditionWrapper>
   );

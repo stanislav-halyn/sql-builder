@@ -6,12 +6,14 @@ import {
   SearchConditionTypesE,
   SearchConditionI,
   SearchConditionOptionI,
+  ColumnI,
 } from '@entities/sql-builder';
 
 // Mocks
 import { TABLE_MOCK } from '../../../mocks/table-mock';
 
 // Components
+import { Input, Select } from '@components/controls';
 import SearchConditionWrapper from '../search-condition-wrapper';
 
 /**
@@ -26,6 +28,13 @@ interface SearchConditionBasePropsI {
     updater: (oldCondition: SearchConditionI<string>) => SearchConditionI<string>
   ) => void;
 }
+
+/**
+ * Local helpers
+ */
+const getValue = <T extends SearchConditionOptionI | ColumnI>(option: T) => option.value;
+
+const getLabel = <T extends SearchConditionOptionI | ColumnI>(option: T) => option.label;
 
 /**
  * Search condition base which shows basic content
@@ -68,23 +77,25 @@ const SearchConditionBase = ({
 
   return (
     <SearchConditionWrapper>
-      <select name="columns" value={selectedColumn} onChange={handleColumnChange}>
-        {TABLE_MOCK.columns.map(column => (
-          <option key={`columns-option-${column.value}`} value={column.value}>
-            {column.label}
-          </option>
-        ))}
-      </select>
+      <Select
+        name="columns"
+        value={selectedColumn}
+        onChange={handleColumnChange}
+        options={TABLE_MOCK.columns}
+        getValue={getValue}
+        getLabel={getLabel}
+      />
 
-      <select name="condition" value={conditionType} onChange={handleConditionChange}>
-        {searchConditionOptions.map(searchCondition => (
-          <option key={`conditions-option-${searchCondition.value}`} value={searchCondition.value}>
-            {searchCondition.label}
-          </option>
-        ))}
-      </select>
+      <Select
+        name="condition"
+        value={conditionType}
+        onChange={handleConditionChange}
+        options={searchConditionOptions}
+        getValue={getValue}
+        getLabel={getLabel}
+      />
 
-      <input type="text" value={value} onChange={handleValueChange} />
+      <Input type="text" value={value} onChange={handleValueChange} />
     </SearchConditionWrapper>
   );
 };

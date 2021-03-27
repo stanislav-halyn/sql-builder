@@ -2,6 +2,7 @@
   display: flex;
   flex: 1 1 auto;
   min-width: 0;
+  align-items: center;
 
   & > *:not(span) {
     flex: 1;

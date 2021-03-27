@@ -1,0 +1,12 @@
+@import '~@style/colors.scss';
+
+.common {
+  outline: none;
+  border: 1px solid $gray;
+  border-radius: 4px;
+
+  font-size: 14px;
+  color: $big-stone;
+
+  padding: 4px 8px;
+}
