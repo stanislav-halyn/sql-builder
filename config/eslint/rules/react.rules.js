@@ -18,5 +18,6 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-fragments': 'off',
     'react/jsx-wrap-multilines': 'off',
+    'react/jsx-curly-newline': 'off',
   },
 };
