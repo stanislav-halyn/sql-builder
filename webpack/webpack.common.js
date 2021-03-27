@@ -33,6 +33,7 @@ module.exports = {
       '@utils': path.resolve(paths.src, 'utils'),
       '@typings': path.resolve(paths.src, 'typings'),
       '@features': path.resolve(paths.src, 'features'),
+      '@entities': path.resolve(paths.src, 'entities'),
       '@style': path.resolve(paths.src, 'style'),
     },
   },
