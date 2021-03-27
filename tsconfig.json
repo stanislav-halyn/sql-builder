@@ -19,7 +19,8 @@
       "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
       "@typings/*": ["src/typings/*"],
-      "@features/*": ["src/features/*"]
+      "@features/*": ["src/features/*"],
+      "@entities/*": ["src/entities/*"]
     },
     "lib": ["es2015", "es2017", "dom"],
     "jsx": "react"

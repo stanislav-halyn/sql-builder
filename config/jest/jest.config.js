@@ -22,6 +22,7 @@ module.exports = {
     '^@utils(.*)$': '<rootDir>/../../src/utils$1',
     '^@typings(.*)$': '<rootDir>/../../src/typings$1',
     '^@features(.*)$': '<rootDir>/../../src/features$1',
+    '^@entities(.*)$': '<rootDir>/../../src/entities$1',
   },
 
   moduleFileExtensions: ['ts', 'tsx', 'js'],
