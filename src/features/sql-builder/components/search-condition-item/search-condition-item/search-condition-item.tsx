@@ -1,5 +1,5 @@
 // Modules
-import React, { useMemo, useCallback, memo } from 'react';
+import React, { useMemo, useCallback, memo, useEffect } from 'react';
 import { MdClear } from 'react-icons/md';
 import CSSModules from 'react-css-modules';
 
@@ -70,6 +70,17 @@ const SearchConditionItem = ({
   const handleRemoveItem = useCallback(() => {
     removeSearchCondition(index);
   }, [removeSearchCondition, index]);
+
+  /**
+   * We should reset the `conditionType` field when the user
+   * changes `selectedColumn`
+   */
+  useEffect(() => {
+    handleUpdateItem(oldItem => ({
+      ...oldItem,
+      conditionType: SearchConditionTypesE.EQUALS,
+    }));
+  }, [selectedColumn, handleUpdateItem]);
 
   const memoizedItem = useMemo(() => {
     switch (conditionType) {
