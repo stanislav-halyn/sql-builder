@@ -19,5 +19,6 @@ module.exports = {
     'react/jsx-fragments': 'off',
     'react/jsx-wrap-multilines': 'off',
     'react/jsx-curly-newline': 'off',
+    'react/no-array-index-key': 'off',
   },
 };

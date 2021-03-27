@@ -1,9 +1,14 @@
 // Modules
 import React from 'react';
 
+// Features
+import { SqlBuilder } from '@features/sql-builder';
+
 /**
  * Root app component
  */
-const App = () => <div>Hello, it's working!</div>;
+const App = () => {
+  return <SqlBuilder />;
+};
 
 export default App;
