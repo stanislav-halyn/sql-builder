@@ -18,6 +18,7 @@ import { TABLE_MOCK } from '../../../mocks/table-mock';
 // Components
 import { Input, Select } from '@components/controls';
 import SearchConditionWrapper from '../search-condition-wrapper';
+import SearchConditionText from '../search-condition-text';
 
 /**
  * Local typings
@@ -96,7 +97,7 @@ const SearchConditionBetween = ({
         getLabel={getLabel}
       />
 
-      <span>is</span>
+      <SearchConditionText>is</SearchConditionText>
 
       <Select
         name="condition"
@@ -110,7 +111,7 @@ const SearchConditionBetween = ({
       <Fragment>
         <Input type="text" data-value-index={0} value={value[0]} onChange={handleValueChange} />
 
-        <span>and</span>
+        <SearchConditionText>and</SearchConditionText>
 
         <Input type="text" data-value-index={1} value={value[1]} onChange={handleValueChange} />
       </Fragment>

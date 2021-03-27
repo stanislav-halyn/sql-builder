@@ -1,0 +1,14 @@
+@import '~@style/colors.scss';
+
+.common {
+  border: 1px solid $gray;
+  border-radius: 4px;
+
+  font-size: 14px;
+  font-family: sans-serif;
+  color: $big-stone;
+
+  padding: 4px 8px;
+
+  background-color: $mystic;
+}
