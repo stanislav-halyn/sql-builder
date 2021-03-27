@@ -11,6 +11,9 @@ import {
 // Mocks
 import { TABLE_MOCK } from '../../../mocks/table-mock';
 
+// Components
+import SearchConditionWrapper from '../search-condition-wrapper';
+
 /**
  * Local typings
  */
@@ -22,7 +25,6 @@ interface SearchConditionBasePropsI {
   handleUpdateItem: (
     updater: (oldCondition: SearchConditionI<string>) => SearchConditionI<string>
   ) => void;
-  handleRemoveItem: () => void;
 }
 
 /**
@@ -35,7 +37,6 @@ const SearchConditionBase = ({
   value,
   searchConditionOptions,
   handleUpdateItem,
-  handleRemoveItem,
 }: SearchConditionBasePropsI) => {
   const handleColumnChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) =>
@@ -66,9 +67,7 @@ const SearchConditionBase = ({
   );
 
   return (
-    <div>
-      <button onClick={handleRemoveItem}>Delete</button>
-
+    <SearchConditionWrapper>
       <select name="columns" value={selectedColumn} onChange={handleColumnChange}>
         {TABLE_MOCK.columns.map(column => (
           <option key={`columns-option-${column.value}`} value={column.value}>
@@ -86,7 +85,7 @@ const SearchConditionBase = ({
       </select>
 
       <input type="text" value={value} onChange={handleValueChange} />
-    </div>
+    </SearchConditionWrapper>
   );
 };
 

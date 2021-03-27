@@ -1,5 +1,7 @@
 // Modules
 import React, { useMemo, useCallback, memo } from 'react';
+import { MdClear } from 'react-icons/md';
+import CSSModules from 'react-css-modules';
 
 // Entities
 import {
@@ -14,6 +16,9 @@ import SearchConditionBetween from '../search-condition-between';
 
 // Mocks
 import { TABLE_MOCK } from '../../../mocks/table-mock';
+
+// Styles
+import styles from './search-condition-item.scss';
 
 /**
  * Local typings
@@ -76,7 +81,6 @@ const SearchConditionItem = ({
             value={value}
             searchConditionOptions={searchConditionOptions}
             handleUpdateItem={handleUpdateItem}
-            handleRemoveItem={handleRemoveItem}
           />
         );
       default:
@@ -87,20 +91,18 @@ const SearchConditionItem = ({
             value={value}
             searchConditionOptions={searchConditionOptions}
             handleUpdateItem={handleUpdateItem}
-            handleRemoveItem={handleRemoveItem}
           />
         );
     }
-  }, [
-    conditionType,
-    handleRemoveItem,
-    handleUpdateItem,
-    selectedColumn,
-    value,
-    searchConditionOptions,
-  ]);
+  }, [conditionType, handleUpdateItem, selectedColumn, value, searchConditionOptions]);
 
-  return memoizedItem;
+  return (
+    <div styleName="common">
+      <MdClear styleName="remove-icon" onClick={handleRemoveItem} />
+
+      {memoizedItem}
+    </div>
+  );
 };
 
-export default memo(SearchConditionItem);
+export default memo(CSSModules(SearchConditionItem, styles));

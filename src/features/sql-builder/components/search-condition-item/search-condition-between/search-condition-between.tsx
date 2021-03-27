@@ -14,6 +14,9 @@ import { updateArrayItem } from '@utils/array.utils';
 // Mocks
 import { TABLE_MOCK } from '../../../mocks/table-mock';
 
+// Components
+import SearchConditionWrapper from '../search-condition-wrapper';
+
 /**
  * Local typings
  */
@@ -25,7 +28,6 @@ interface SearchConditionBetweenPropsI {
   handleUpdateItem: (
     updater: (oldCondition: SearchConditionI<number[]>) => SearchConditionI<number[]>
   ) => void;
-  handleRemoveItem: () => void;
 }
 
 /**
@@ -38,7 +40,6 @@ const SearchConditionBetween = ({
   value,
   searchConditionOptions,
   handleUpdateItem,
-  handleRemoveItem,
 }: SearchConditionBetweenPropsI) => {
   const handleColumnChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) =>
@@ -76,8 +77,7 @@ const SearchConditionBetween = ({
   );
 
   return (
-    <div>
-      <button onClick={handleRemoveItem}>Delete</button>
+    <SearchConditionWrapper>
       <select name="columns" value={selectedColumn} onChange={handleColumnChange}>
         {TABLE_MOCK.columns.map(column => (
           <option key={`columns-option-${column.value}`} value={column.value}>
@@ -98,10 +98,12 @@ const SearchConditionBetween = ({
 
       <Fragment>
         <input type="text" data-value-index={0} value={value[0]} onChange={handleValueChange} />
-        and
+
+        <span>and</span>
+
         <input type="text" data-value-index={1} value={value[1]} onChange={handleValueChange} />
       </Fragment>
-    </div>
+    </SearchConditionWrapper>
   );
 };
 
