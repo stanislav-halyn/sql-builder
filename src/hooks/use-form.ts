@@ -21,8 +21,8 @@ export const useArrayFields = <Entity extends object>({
   }, [setItems, getInitialEntity]);
 
   const updateItem = useCallback(
-    (index: number, newValue: Partial<Entity>) => {
-      setItems(oldConditions => updateArrayItem(oldConditions, index, newValue));
+    (index: number, updater: (oldItem: Entity) => Entity) => {
+      setItems(oldConditions => updateArrayItem(oldConditions, index, updater));
     },
     [setItems]
   );

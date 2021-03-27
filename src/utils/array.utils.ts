@@ -18,13 +18,10 @@ export const addArrayItem = <T>(arr: T[], item: T) => [...arr, item];
 /**
  * Updates array item by the given index
  */
-export const updateArrayItem = <T>(arr: T[], index: number, item: Partial<T>): T[] => {
+export const updateArrayItem = <T>(arr: T[], index: number, updater: (oldItem: T) => T): T[] => {
   checkIndexExists(arr, index);
 
-  const newItem = {
-    ...arr[index],
-    ...item,
-  };
+  const newItem = updater(arr[index]);
   const newArr = [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
 
   return newArr;

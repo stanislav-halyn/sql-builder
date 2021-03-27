@@ -33,7 +33,7 @@ describe('use-form.ts', () => {
       const { result } = renderHook(() => useArrayFields({ initialState, getInitialEntity }));
 
       act(() => {
-        result.current.updateItem(0, { name: 'Joe' });
+        result.current.updateItem(0, () => ({ name: 'Joe' }));
       });
 
       expect(result.current.items).toEqual([{ name: 'Joe' }]);

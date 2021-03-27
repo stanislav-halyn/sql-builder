@@ -22,7 +22,7 @@ describe('array.utils.ts', () => {
       const index = 1;
       const item = { item: 'foo-bar' };
 
-      const result = updateArrayItem(arr, index, item);
+      const result = updateArrayItem(arr, index, oldItem => ({ ...oldItem, ...item }));
       const expectedResult = [
         { item: 'bar', id: 0 },
         { item: 'foo-bar', id: 1 },
@@ -35,7 +35,7 @@ describe('array.utils.ts', () => {
       const arr = [{ foo: 'bar' }];
 
       const updateNonExistingIndex = () => {
-        updateArrayItem(arr, 1, { foo: 'foo' });
+        updateArrayItem(arr, 1, oldItem => ({ ...oldItem, foo: 'foo' }));
       };
 
       expect(updateNonExistingIndex).toThrowError(NonExistError);
