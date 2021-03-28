@@ -25,10 +25,10 @@ import { useSearchConditionInputSettings } from '../../../hooks/use-sql-builder'
 interface SearchConditionBasePropsI {
   selectedColumn: string;
   conditionType: SearchConditionTypesE;
-  value: string;
+  value: string | number;
   searchConditionOptions: SearchConditionOptionI[];
   handleUpdateItem: (
-    updater: (oldCondition: SearchConditionI<string>) => SearchConditionI<string>
+    updater: (oldCondition: SearchConditionI<string | number>) => SearchConditionI<string | number>
   ) => void;
 }
 
@@ -75,12 +75,14 @@ const SearchConditionBase = ({
 
   const handleValueChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      const newValue = type === 'text' ? e.target.value : +e.target.value;
+
       handleUpdateItem(oldCondition => ({
         ...oldCondition,
-        value: e.target.value,
+        value: newValue,
       }));
     },
-    [handleUpdateItem]
+    [handleUpdateItem, type]
   );
 
   return (
