@@ -53,11 +53,23 @@ const SearchConditionItem = ({
   updateSearchCondition,
   removeSearchCondition,
 }: SearchConditionItemPropsI) => {
-  const searchConditionOptions = useMemo(() => {
-    const selectedColumnObj = TABLE_MOCK.columns.find(column => selectedColumn === column.value);
+  const selectedColumnObj = useMemo(
+    () => TABLE_MOCK.columns.find(column => selectedColumn === column.value),
+    [selectedColumn]
+  );
 
-    return searchConditionUtils.getSearchConditionOptions(selectedColumnObj!);
-  }, [selectedColumn]);
+  const inputPlaceholder = useMemo(() => {
+    if (conditionType === SearchConditionTypesE.IN_LIST) {
+      return 'item, item2';
+    }
+
+    return selectedColumnObj?.placeholder || '';
+  }, [conditionType, selectedColumnObj]);
+
+  const searchConditionOptions = useMemo(
+    () => searchConditionUtils.getSearchConditionOptions(selectedColumnObj!),
+    [selectedColumnObj]
+  );
 
   /**
    * Initializing partial function for updating search condition
@@ -97,6 +109,7 @@ const SearchConditionItem = ({
       default:
         return (
           <SearchConditionBase
+            inputPlaceholder={inputPlaceholder}
             selectedColumn={selectedColumn}
             conditionType={conditionType}
             value={value}
@@ -105,7 +118,14 @@ const SearchConditionItem = ({
           />
         );
     }
-  }, [conditionType, handleUpdateItem, selectedColumn, value, searchConditionOptions]);
+  }, [
+    inputPlaceholder,
+    conditionType,
+    handleUpdateItem,
+    selectedColumn,
+    value,
+    searchConditionOptions,
+  ]);
 
   return (
     <div styleName="common">

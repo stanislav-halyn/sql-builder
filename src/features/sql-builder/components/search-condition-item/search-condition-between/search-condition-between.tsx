@@ -109,11 +109,23 @@ const SearchConditionBetween = ({
       />
 
       <Fragment>
-        <Input type="text" data-value-index={0} value={value[0]} onChange={handleValueChange} />
+        <Input
+          type="text"
+          data-value-index={0}
+          value={value[0]}
+          onChange={handleValueChange}
+          placeholder="0"
+        />
 
         <SearchConditionText>and</SearchConditionText>
 
-        <Input type="text" data-value-index={1} value={value[1]} onChange={handleValueChange} />
+        <Input
+          type="text"
+          data-value-index={1}
+          value={value[1]}
+          onChange={handleValueChange}
+          placeholder="0"
+        />
       </Fragment>
     </SearchConditionWrapper>
   );

@@ -20,6 +20,7 @@ import SearchConditionWrapper from '../search-condition-wrapper';
  * Local typings
  */
 interface SearchConditionBasePropsI {
+  inputPlaceholder: string;
   selectedColumn: string;
   conditionType: SearchConditionTypesE;
   value: string;
@@ -41,6 +42,7 @@ const getLabel = <T extends SearchConditionOptionI | ColumnI>(option: T) => opti
  * for any search condition case
  */
 const SearchConditionBase = ({
+  inputPlaceholder,
   selectedColumn,
   conditionType,
   value,
@@ -95,7 +97,12 @@ const SearchConditionBase = ({
         getLabel={getLabel}
       />
 
-      <Input type="text" value={value} onChange={handleValueChange} />
+      <Input
+        type="text"
+        value={value}
+        onChange={handleValueChange}
+        placeholder={inputPlaceholder}
+      />
     </SearchConditionWrapper>
   );
 };

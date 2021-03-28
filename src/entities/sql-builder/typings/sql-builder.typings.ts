@@ -5,6 +5,7 @@ export interface ColumnI {
   label: string;
   value: string;
   type: ColumnTypesE;
+  placeholder: string;
 }
 
 export interface SearchConditionI<V> {
