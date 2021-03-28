@@ -26,7 +26,9 @@ const SEARCH_CONDITION_PARSERS_MAPPER = {
   [SearchConditionTypesE.STARTS_WITH]: (condition: SearchConditionI<string>) =>
     startsWith(condition.column, condition.value),
   [SearchConditionTypesE.IN_LIST]: (condition: SearchConditionI<string>) => {
-    const parsedValue = condition.value.split(', ');
+    const parsedValue = condition.value
+      .split(', ')
+      .map(value => (Number.isNaN(+value) ? value : +value));
 
     return inList(condition.column, parsedValue);
   },
