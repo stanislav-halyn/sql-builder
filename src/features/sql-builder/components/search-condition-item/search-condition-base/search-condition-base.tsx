@@ -16,11 +16,13 @@ import { TABLE_MOCK } from '../../../mocks/table-mock';
 import { Input, Select } from '@components/controls';
 import SearchConditionWrapper from '../search-condition-wrapper';
 
+// Hooks
+import { useSearchConditionInputSettings } from '../../../hooks/use-sql-builder';
+
 /**
  * Local typings
  */
 interface SearchConditionBasePropsI {
-  inputPlaceholder: string;
   selectedColumn: string;
   conditionType: SearchConditionTypesE;
   value: string;
@@ -42,13 +44,17 @@ const getLabel = <T extends SearchConditionOptionI | ColumnI>(option: T) => opti
  * for any search condition case
  */
 const SearchConditionBase = ({
-  inputPlaceholder,
   selectedColumn,
   conditionType,
   value,
   searchConditionOptions,
   handleUpdateItem,
 }: SearchConditionBasePropsI) => {
+  const { placeholder, type } = useSearchConditionInputSettings({
+    columnValue: selectedColumn,
+    conditionType,
+  });
+
   const handleColumnChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) =>
       handleUpdateItem(oldCondition => ({
@@ -97,12 +103,7 @@ const SearchConditionBase = ({
         getLabel={getLabel}
       />
 
-      <Input
-        type="text"
-        value={value}
-        onChange={handleValueChange}
-        placeholder={inputPlaceholder}
-      />
+      <Input type={type} value={value} onChange={handleValueChange} placeholder={placeholder} />
     </SearchConditionWrapper>
   );
 };

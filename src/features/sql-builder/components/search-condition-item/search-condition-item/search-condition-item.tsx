@@ -14,8 +14,8 @@ import {
 import SearchConditionBase from '../search-condition-base';
 import SearchConditionBetween from '../search-condition-between';
 
-// Mocks
-import { TABLE_MOCK } from '../../../mocks/table-mock';
+// Hooks
+import { useSearchConditionColumn } from '../../../hooks/use-sql-builder';
 
 // Styles
 import styles from './search-condition-item.scss';
@@ -53,19 +53,14 @@ const SearchConditionItem = ({
   updateSearchCondition,
   removeSearchCondition,
 }: SearchConditionItemPropsI) => {
-  const selectedColumnObj = useMemo(
-    () => TABLE_MOCK.columns.find(column => selectedColumn === column.value),
-    [selectedColumn]
-  );
+  /**
+   * Get selected column object
+   */
+  const selectedColumnObj = useSearchConditionColumn(selectedColumn);
 
-  const inputPlaceholder = useMemo(() => {
-    if (conditionType === SearchConditionTypesE.IN_LIST) {
-      return 'item, item2';
-    }
-
-    return selectedColumnObj?.placeholder || '';
-  }, [conditionType, selectedColumnObj]);
-
+  /**
+   * Find search conditions options
+   */
   const searchConditionOptions = useMemo(
     () => searchConditionUtils.getSearchConditionOptions(selectedColumnObj!),
     [selectedColumnObj]
@@ -109,7 +104,6 @@ const SearchConditionItem = ({
       default:
         return (
           <SearchConditionBase
-            inputPlaceholder={inputPlaceholder}
             selectedColumn={selectedColumn}
             conditionType={conditionType}
             value={value}
@@ -118,14 +112,7 @@ const SearchConditionItem = ({
           />
         );
     }
-  }, [
-    inputPlaceholder,
-    conditionType,
-    handleUpdateItem,
-    selectedColumn,
-    value,
-    searchConditionOptions,
-  ]);
+  }, [conditionType, handleUpdateItem, selectedColumn, value, searchConditionOptions]);
 
   return (
     <div styleName="common">

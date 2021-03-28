@@ -110,7 +110,7 @@ const SearchConditionBetween = ({
 
       <Fragment>
         <Input
-          type="text"
+          type="number"
           data-value-index={0}
           value={value[0]}
           onChange={handleValueChange}
@@ -120,7 +120,7 @@ const SearchConditionBetween = ({
         <SearchConditionText>and</SearchConditionText>
 
         <Input
-          type="text"
+          type="number"
           data-value-index={1}
           value={value[1]}
           onChange={handleValueChange}
