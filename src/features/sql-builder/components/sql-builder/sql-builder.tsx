@@ -31,6 +31,17 @@ const SqlBuilder = () => {
 
   const { sqlQuery, resetSqlQuery, parseSearchConditions } = useSearchConditionsParser();
 
+  const handleRemoveSearchCondition = useCallback(
+    (index: number) => {
+      if (searchConditions.length === 1) {
+        resetSearchConditions();
+      } else {
+        removeSearchCondition(index);
+      }
+    },
+    [searchConditions, resetSearchConditions, removeSearchCondition]
+  );
+
   const handleSearch = useCallback(() => {
     parseSearchConditions(searchConditions);
   }, [parseSearchConditions, searchConditions]);
@@ -47,7 +58,7 @@ const SqlBuilder = () => {
       <SearchConditions
         searchConditions={searchConditions}
         updateSearchCondition={updateSearchCondition}
-        removeSearchCondition={removeSearchCondition}
+        removeSearchCondition={handleRemoveSearchCondition}
       />
 
       <div>
