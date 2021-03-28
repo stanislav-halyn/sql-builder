@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2015",
+    "module": "commonjs",
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@constants/*": ["src/constants/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@utils/*": ["src/utils/*"],
+      "@typings/*": ["src/typings/*"],
+      "@features/*": ["src/features/*"],
+      "@entities/*": ["src/entities/*"]
+    },
+    "lib": ["es2015", "es2017", "dom"],
+    "jsx": "react"
+  },
+  "compileOnSave": false,
+  "include": ["src/**/*", "./config/jest/setup-tests.ts"],
+  "exclude": ["node_modules"]
+}

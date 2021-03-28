@@ -1,0 +1,24 @@
+@import '~@style/colors.scss';
+
+.common {
+  display: flex;
+  align-items: center;
+
+  padding: 16px 12px;
+  margin-bottom: 10px;
+
+  border: 1px solid $gray;
+  border-radius: 4px;
+
+  background-color: $white;
+}
+
+.remove-icon {
+  display: flex;
+  flex: 0 0 20px;
+
+  color: $gray-dark;
+  margin-right: 10px;
+
+  cursor: pointer;
+}

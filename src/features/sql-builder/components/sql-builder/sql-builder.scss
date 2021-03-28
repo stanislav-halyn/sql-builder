@@ -1,0 +1,32 @@
+@import '~@style/colors.scss';
+
+.common {
+  width: 640px;
+  margin: 0 auto;
+}
+
+.heading {
+  font-family: Arial;
+  font-size: 18px;
+  font-weight: lighter;
+  color: $big-stone;
+
+  margin: 36px 0px 14px;
+}
+
+.control-buttons {
+  display: flex;
+
+  padding-top: 16px;
+  margin: 52px 0px 32px;
+
+  border-top: 1px solid $echo-blue;
+}
+
+.search-button {
+  margin-right: 24px;
+}
+
+.search-icon {
+  margin-right: 10px;
+}
