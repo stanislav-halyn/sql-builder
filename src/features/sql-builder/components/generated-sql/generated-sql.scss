@@ -1,0 +1,21 @@
+@import '~@style/colors.scss';
+
+.common {
+  min-height: 110px;
+  background-color: $white;
+
+  padding: 10px;
+
+  border: 1px solid $gray-light;
+  border-radius: 4px;
+}
+
+.query {
+  font-family: sans-serif;
+  color: $big-stone;
+
+  word-break: break-word;
+  white-space: pre-wrap;
+
+  margin: 0;
+}

@@ -20,5 +20,7 @@ module.exports = {
     'react/jsx-wrap-multilines': 'off',
     'react/jsx-curly-newline': 'off',
     'react/no-array-index-key': 'off',
+    'react/require-default-props': 'off',
+    'react/no-unused-prop-types': 'off',
   },
 };

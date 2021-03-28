@@ -1,5 +1,5 @@
 // Modules
-import { useState, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 
 // Hooks
 import { useArrayFields } from '@hooks/use-form';
@@ -10,6 +10,7 @@ import {
   SearchConditionI,
   sqlBuilderUtils,
   searchConditionUtils,
+  ColumnTypesE,
 } from '@entities/sql-builder';
 
 // Mocks
@@ -65,8 +66,63 @@ export const useSearchConditionsParser = () => {
     [setSqlQuery]
   );
 
+  const resetSqlQuery = useCallback(() => {
+    setSqlQuery('');
+  }, [setSqlQuery]);
+
   return {
     sqlQuery,
+    resetSqlQuery,
     parseSearchConditions,
   };
+};
+
+/**
+ * A hook for getting current column object.
+ *
+ * NOTE: in real code, this hook for take that value
+ * from a selector for finding the object
+ */
+export const useSearchConditionColumn = (columnValue: string) => {
+  const selectedColumnObj = useMemo(
+    () => TABLE_MOCK.columns.find(column => columnValue === column.value),
+    [columnValue]
+  );
+
+  return selectedColumnObj;
+};
+
+/**
+ * A hook for getting input settings based on the
+ * selected condition and column
+ */
+export const useSearchConditionInputSettings = ({
+  columnValue,
+  conditionType,
+}: {
+  columnValue: string;
+  conditionType: SearchConditionTypesE;
+}) => {
+  const selectedColumnObj = useSearchConditionColumn(columnValue);
+
+  const placeholder = useMemo(() => {
+    if (conditionType === SearchConditionTypesE.IN_LIST) {
+      return 'item, item2';
+    }
+
+    return selectedColumnObj?.placeholder || '';
+  }, [conditionType, selectedColumnObj]);
+
+  const type = useMemo(() => {
+    if (
+      conditionType === SearchConditionTypesE.IN_LIST ||
+      selectedColumnObj?.type === ColumnTypesE.STRING
+    ) {
+      return 'text';
+    }
+
+    return 'number';
+  }, [conditionType, selectedColumnObj]);
+
+  return { placeholder, type };
 };

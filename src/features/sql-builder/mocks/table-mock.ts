@@ -1,5 +1,5 @@
 // Entities
-import { ColumnTypesE } from '@entities/sql-builder';
+import { ColumnTypesE, ColumnI } from '@entities/sql-builder';
 
 export enum ColumnsFieldsE {
   ID = 'id',
@@ -14,22 +14,65 @@ export enum ColumnsFieldsE {
   PATH = 'path',
 }
 
+const TABLE_COLUMNS: ColumnI[] = [
+  {
+    value: ColumnsFieldsE.USER_EMAIL,
+    label: 'User Email',
+    type: ColumnTypesE.STRING,
+    placeholder: 'Johndoe@email.com',
+  },
+  {
+    value: ColumnsFieldsE.SCREEN_WIDTH,
+    label: 'Screen Width',
+    type: ColumnTypesE.NUMBER,
+    placeholder: '0',
+  },
+  {
+    value: ColumnsFieldsE.SCREEN_HEIGHT,
+    label: 'Screen Height',
+    type: ColumnTypesE.NUMBER,
+    placeholder: '0',
+  },
+  {
+    value: ColumnsFieldsE.VISITS,
+    label: '# of Visits',
+    type: ColumnTypesE.NUMBER,
+    placeholder: '0',
+  },
+  {
+    value: ColumnsFieldsE.USER_FIRST_NAME,
+    label: 'First Name',
+    type: ColumnTypesE.STRING,
+    placeholder: 'John',
+  },
+  {
+    value: ColumnsFieldsE.USER_LAST_NAME,
+    label: 'Last Name',
+    type: ColumnTypesE.STRING,
+    placeholder: 'Doe',
+  },
+  {
+    value: ColumnsFieldsE.PAGE_RESPONSE,
+    label: 'Page Response time (ms)',
+    type: ColumnTypesE.NUMBER,
+    placeholder: '0',
+  },
+  {
+    value: ColumnsFieldsE.DOMAIN,
+    label: 'Domain',
+    type: ColumnTypesE.STRING,
+    placeholder: 'website.com',
+  },
+  {
+    value: ColumnsFieldsE.PATH,
+    label: 'Page Path',
+    type: ColumnTypesE.STRING,
+    placeholder: '/page',
+  },
+];
+
 export const TABLE_MOCK = {
   label: 'Sessions',
   value: 'sessions',
-  columns: [
-    { value: ColumnsFieldsE.USER_EMAIL, label: 'User Email', type: ColumnTypesE.STRING },
-    { value: ColumnsFieldsE.SCREEN_WIDTH, label: 'Screen Width', type: ColumnTypesE.NUMBER },
-    { value: ColumnsFieldsE.SCREEN_HEIGHT, label: 'Screen Height', type: ColumnTypesE.NUMBER },
-    { value: ColumnsFieldsE.VISITS, label: '# of Visits', type: ColumnTypesE.NUMBER },
-    { value: ColumnsFieldsE.USER_FIRST_NAME, label: 'First Name', type: ColumnTypesE.STRING },
-    { value: ColumnsFieldsE.USER_LAST_NAME, label: 'Last Name', type: ColumnTypesE.STRING },
-    {
-      value: ColumnsFieldsE.PAGE_RESPONSE,
-      label: 'Page Response time (ms)',
-      type: ColumnTypesE.NUMBER,
-    },
-    { value: ColumnsFieldsE.DOMAIN, label: 'Domain', type: ColumnTypesE.STRING },
-    { value: ColumnsFieldsE.PATH, label: 'Page Path', type: ColumnTypesE.STRING },
-  ],
+  columns: TABLE_COLUMNS,
 };

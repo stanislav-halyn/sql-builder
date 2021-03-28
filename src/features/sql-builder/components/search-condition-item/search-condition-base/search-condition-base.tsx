@@ -6,10 +6,18 @@ import {
   SearchConditionTypesE,
   SearchConditionI,
   SearchConditionOptionI,
+  ColumnI,
 } from '@entities/sql-builder';
 
 // Mocks
 import { TABLE_MOCK } from '../../../mocks/table-mock';
+
+// Components
+import { Input, Select } from '@components/controls';
+import SearchConditionWrapper from '../search-condition-wrapper';
+
+// Hooks
+import { useSearchConditionInputSettings } from '../../../hooks/use-sql-builder';
 
 /**
  * Local typings
@@ -17,13 +25,19 @@ import { TABLE_MOCK } from '../../../mocks/table-mock';
 interface SearchConditionBasePropsI {
   selectedColumn: string;
   conditionType: SearchConditionTypesE;
-  value: string;
+  value: string | number;
   searchConditionOptions: SearchConditionOptionI[];
   handleUpdateItem: (
-    updater: (oldCondition: SearchConditionI<string>) => SearchConditionI<string>
+    updater: (oldCondition: SearchConditionI<string | number>) => SearchConditionI<string | number>
   ) => void;
-  handleRemoveItem: () => void;
 }
+
+/**
+ * Local helpers
+ */
+const getValue = <T extends SearchConditionOptionI | ColumnI>(option: T) => option.value;
+
+const getLabel = <T extends SearchConditionOptionI | ColumnI>(option: T) => option.label;
 
 /**
  * Search condition base which shows basic content
@@ -35,8 +49,12 @@ const SearchConditionBase = ({
   value,
   searchConditionOptions,
   handleUpdateItem,
-  handleRemoveItem,
 }: SearchConditionBasePropsI) => {
+  const { placeholder, type } = useSearchConditionInputSettings({
+    columnValue: selectedColumn,
+    conditionType,
+  });
+
   const handleColumnChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) =>
       handleUpdateItem(oldCondition => ({
@@ -57,36 +75,38 @@ const SearchConditionBase = ({
 
   const handleValueChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      const newValue = type === 'text' ? e.target.value : +e.target.value;
+
       handleUpdateItem(oldCondition => ({
         ...oldCondition,
-        value: e.target.value,
+        value: newValue,
       }));
     },
-    [handleUpdateItem]
+    [handleUpdateItem, type]
   );
 
   return (
-    <div>
-      <button onClick={handleRemoveItem}>Delete</button>
+    <SearchConditionWrapper>
+      <Select
+        name="columns"
+        value={selectedColumn}
+        onChange={handleColumnChange}
+        options={TABLE_MOCK.columns}
+        getValue={getValue}
+        getLabel={getLabel}
+      />
 
-      <select name="columns" value={selectedColumn} onChange={handleColumnChange}>
-        {TABLE_MOCK.columns.map(column => (
-          <option key={`columns-option-${column.value}`} value={column.value}>
-            {column.label}
-          </option>
-        ))}
-      </select>
+      <Select
+        name="condition"
+        value={conditionType}
+        onChange={handleConditionChange}
+        options={searchConditionOptions}
+        getValue={getValue}
+        getLabel={getLabel}
+      />
 
-      <select name="condition" value={conditionType} onChange={handleConditionChange}>
-        {searchConditionOptions.map(searchCondition => (
-          <option key={`conditions-option-${searchCondition.value}`} value={searchCondition.value}>
-            {searchCondition.label}
-          </option>
-        ))}
-      </select>
-
-      <input type="text" value={value} onChange={handleValueChange} />
-    </div>
+      <Input type={type} value={value} onChange={handleValueChange} placeholder={placeholder} />
+    </SearchConditionWrapper>
   );
 };
 

@@ -10,7 +10,7 @@ module.exports = {
     'newline-per-chained-call': 'off',
     'no-param-reassign': ['error', { props: false }],
     'no-underscore-dangle': 'off',
-    'operator-linebreak': ['error', 'before'],
+    'operator-linebreak': ['error', 'after'],
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
     'no-inline-comments': 'off',
     'no-return-await': 'error',

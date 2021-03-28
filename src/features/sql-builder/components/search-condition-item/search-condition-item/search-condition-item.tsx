@@ -1,5 +1,7 @@
 // Modules
-import React, { useMemo, useCallback, memo } from 'react';
+import React, { useMemo, useCallback, memo, useEffect } from 'react';
+import { MdClear } from 'react-icons/md';
+import CSSModules from 'react-css-modules';
 
 // Entities
 import {
@@ -12,8 +14,11 @@ import {
 import SearchConditionBase from '../search-condition-base';
 import SearchConditionBetween from '../search-condition-between';
 
-// Mocks
-import { TABLE_MOCK } from '../../../mocks/table-mock';
+// Hooks
+import { useSearchConditionColumn } from '../../../hooks/use-sql-builder';
+
+// Styles
+import styles from './search-condition-item.scss';
 
 /**
  * Local typings
@@ -48,11 +53,18 @@ const SearchConditionItem = ({
   updateSearchCondition,
   removeSearchCondition,
 }: SearchConditionItemPropsI) => {
-  const searchConditionOptions = useMemo(() => {
-    const selectedColumnObj = TABLE_MOCK.columns.find(column => selectedColumn === column.value);
+  /**
+   * Get selected column object
+   */
+  const selectedColumnObj = useSearchConditionColumn(selectedColumn);
 
-    return searchConditionUtils.getSearchConditionOptions(selectedColumnObj!);
-  }, [selectedColumn]);
+  /**
+   * Find search conditions options
+   */
+  const searchConditionOptions = useMemo(
+    () => searchConditionUtils.getSearchConditionOptions(selectedColumnObj!),
+    [selectedColumnObj]
+  );
 
   /**
    * Initializing partial function for updating search condition
@@ -66,6 +78,17 @@ const SearchConditionItem = ({
     removeSearchCondition(index);
   }, [removeSearchCondition, index]);
 
+  /**
+   * We should reset the `conditionType` field when the user
+   * changes `selectedColumn`
+   */
+  useEffect(() => {
+    handleUpdateItem(oldItem => ({
+      ...oldItem,
+      conditionType: SearchConditionTypesE.EQUALS,
+    }));
+  }, [selectedColumn, handleUpdateItem]);
+
   const memoizedItem = useMemo(() => {
     switch (conditionType) {
       case SearchConditionTypesE.BETWEEN:
@@ -76,7 +99,6 @@ const SearchConditionItem = ({
             value={value}
             searchConditionOptions={searchConditionOptions}
             handleUpdateItem={handleUpdateItem}
-            handleRemoveItem={handleRemoveItem}
           />
         );
       default:
@@ -87,20 +109,18 @@ const SearchConditionItem = ({
             value={value}
             searchConditionOptions={searchConditionOptions}
             handleUpdateItem={handleUpdateItem}
-            handleRemoveItem={handleRemoveItem}
           />
         );
     }
-  }, [
-    conditionType,
-    handleRemoveItem,
-    handleUpdateItem,
-    selectedColumn,
-    value,
-    searchConditionOptions,
-  ]);
+  }, [conditionType, handleUpdateItem, selectedColumn, value, searchConditionOptions]);
 
-  return memoizedItem;
+  return (
+    <div styleName="common">
+      <MdClear styleName="remove-icon" onClick={handleRemoveItem} />
+
+      {memoizedItem}
+    </div>
+  );
 };
 
-export default memo(SearchConditionItem);
+export default memo(CSSModules(SearchConditionItem, styles));
